@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+{% for a in cdlist %}
+<div>
+    <ul>
+        <li>Name: {{a.name}}</li>
+        <li>Artist: {{a.artist}}</li>
+    </ul>
+</div>
+{% endfor %}
+
+
+<div id="cds">
+
+</div>
+
+<script>
+
+var xhr = new XMLHttpRequest();
+xhr.open('GET', '/albums');
+xhr.onload = function(evt) {
+   if (xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        var container = document.getElementById('cds');
+        for (i = 0; i < response.length; i++) {
+        	var cd = response[i];
+        	var div = document.createElement('div');
+        	div.innerHTML = "Artist: " + cd.artist + " Title: "  + cd.name;
+        	container.appendChild(div);
+        }
+    } else {
+        alert('Request failed.  Returned status of ' + xhr.status);
+    }
+};
+xhr.send();
+</script>
+
+</body>
+</html>
